@@ -10,12 +10,23 @@ Like the [Tinycar CM4](https://autosys-lab.de/platforms/2021miniaturplatform/), 
 The Tinycar is designed to be used with an ESP32 S3, which allows to accelerate ML needed operations. So small neural networks for end-to-end self driving can be compiled to run on the ESP32 or for rapid prototyping, the camera image (from an OV2640) of the car can be streamed in real-time over RTP to a more powerful computer. An external antenna should improve the Wi-Fi connection for the image streaming. 
 
 ## Controlling the car
+### Library
+You can use [tinycar_lib](https://github.com/danielriege/tinycar_lib) to communicate with the car. It can be used in C++ and Python alike. Basically it only exposes user-friendly methods to create firmware compatible protocol messages (TCCP and TCFP). Additionaly it also re-assembles the fragmented camera image into an openCV mat and provides with some diagnostic telemtry data (like frame latency, interarrival jitter etc.). This libraru is also used in the tinycar_runtime. 
+
 ### Firmware
 The car runs using the [tinycar firmware](https://github.com/danielriege/tinycar_firmware).
 
-Commands are sent to the car by using a custom protocol on top of UDP. Using the same procotol, the car will also send diagnostics and telemetry data back. Using a mDNS mechanism, cars on the local network can be discovered. RTP and RTCP are used to stream the camera images from the ESP to another receiver. 
+Commands are sent to the car by using a custom protocol on top of UDP:
+##### TCCP (TinyCar Control Protocol)
+Includes different message types like: 
+- car control (speed, steering angle and led state)
+- telemtry (battery voltage, wifi rssi, camera fps)
+- stream control (packet loss for congestion avoidance which is not yet implemented)
+- rtt (timestamp for frame lateny measurement)
 
-Protocol definition follows as soon as firmware has v2 release...
+##### TCFP (TinyCar Frame Protocol)
+Heavily inspired by [RTP](https://datatracker.ietf.org/doc/html/rfc3550).
+Includes two message types. A sender report similar but simpler than RTCP and an header, which includes metadata for a frame fragment. 
 
 ### Runtime
 The [tinycar runtime](https://github.com/danielriege/tinycar_runtime) is a cross-platform GUI application written in C++ for optimal performance. It is always work in progress until it can control the cars as Level 5 autonomous driving (probably never reached). Until then it can demonstrate the capabilities of the car (like road marking detection) and provide basic functionality like remote control and camera data collection. 
