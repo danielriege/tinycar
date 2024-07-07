@@ -11,7 +11,7 @@ The Tinycar is designed to be used with an ESP32 S3, which allows to accelerate 
 
 ## Controlling the car
 ### Library
-You can use [tinycar_lib](https://github.com/danielriege/tinycar_lib) to communicate with the car. It can be used in C++ and Python alike. Basically it only exposes user-friendly methods to create firmware compatible protocol messages (TCCP and TCFP). Additionaly it also re-assembles the fragmented camera image into an openCV mat and provides with some diagnostic telemtry data (like frame latency, interarrival jitter etc.). This libraru is also used in the tinycar_runtime. 
+You can use [tinycar_lib](https://github.com/danielriege/tinycar_lib) to communicate with the car. It can be used in C++ and Python alike. Basically it only exposes user-friendly methods to create firmware compatible protocol messages (TCCP and TCFP). Additionaly it also re-assembles the fragmented camera image into an openCV mat and provides with some diagnostic telemtry data (like frame latency, interarrival jitter etc.). This library is also used in the tinycar_runtime. 
 
 ### Firmware
 The car runs using the [tinycar firmware](https://github.com/danielriege/tinycar_firmware).
@@ -27,6 +27,9 @@ Includes different message types like:
 ##### TCFP (TinyCar Frame Protocol)
 Heavily inspired by [RTP](https://datatracker.ietf.org/doc/html/rfc3550).
 Includes two message types. A sender report similar but simpler than RTCP and an header, which includes metadata for a frame fragment. 
+
+### Simulation
+To simulate driving behavior, use [tinycarlo](https://github.com/danielriege/tinycarlo). It is a simulation environment allowing to test and develop control software for the tinycar. It is wrapped inside an [Farama Gymnasium](https://gymnasium.farama.org/index.html) to allow easy training of RL agents. Inside the the examples folder of the tinycarlo repo, several different control algorithms can be found. The simulation also allows for the use of real-world environments, like at [HAW Hamburg](https://autosys-lab.de/platforms/2020h0streetplatform/) which uses [overhead cameras](https://github.com/autosys-lab/overhead_tinycar_tracking) to track the tinycar to localize the car (necessary for a ground truth in the simulation). 
 
 ### Runtime
 The [tinycar runtime](https://github.com/danielriege/tinycar_runtime) is a cross-platform GUI application written in C++ for optimal performance. It is always work in progress until it can control the cars as Level 5 autonomous driving (probably never reached). Until then it can demonstrate the capabilities of the car (like road marking detection) and provide basic functionality like remote control and camera data collection. 
