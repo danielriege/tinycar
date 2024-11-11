@@ -1,6 +1,6 @@
 # Tinycar PCB
 
-For all the electronic need a custom PCB for the Tinycar is designed.
+For all the electronic needs a custom PCB for the Tinycar is designed.
 Main features are:
 - H-Bridge IC for the DC motor control
 - LiPo Battery Charger IC with a custom load sharing mod
@@ -18,3 +18,4 @@ Main features are:
 - BAT_ADC is connected to the wrong pin on the ESP32. It should be connected to GPIO 1 instead of GPIO 21, which does not have an ADC. So one of the custom use GPIOs can be used for the battery voltage measurement if a cable is soldered between these two pins.
 - The cap for the BAD_ADC_EN seems to be too high?? It takes a way longer time until the ADC is ready to be read. Maybe it is better to remove the cap. The current version of the firmware just puts HIGH on this pin forever.
 
+To view and edit the schematics and layout, you can use this [link](https://oshwlab.com/danielriege/tinycar_esp).
